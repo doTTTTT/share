@@ -62,7 +62,7 @@ private fun Content() {
         }
         Spacer(Modifier.weight(1f))
         Text(
-            text = "Copyright by GrosMalin.com",
+            text = "Copyright by GrosMalin.com Inc.",
             style = MaterialTheme.typography.labelSmall
         )
         Spacer(Modifier.height(16.dp))
@@ -90,7 +90,7 @@ private fun CardItem(
     description: String
 ) {
     ElevatedCard(
-        onClick = {}
+        onClick = { }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
