@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Chmod
+      run: chmod +x gradlew
     - name: Build wasmJsBrowserProductionWebpack
       run: ./gradlew wasmJsBrowserProductionWebpack
     - name: Copy move files
