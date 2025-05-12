@@ -3,6 +3,7 @@ package com.dot.share
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AccountBalance
 import androidx.compose.material.icons.outlined.AccountTree
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -69,7 +70,7 @@ private fun Cards() {
         description = "Vous cherchez des ressources temporaires ?"
     )
     CardItem(
-        icon = Icons.Outlined.AccountTree,
+        icon = Icons.Outlined.AccountBalance,
         title = "Des ressources en trop",
         description = "Vous avez des ressources en trop ?"
     )
