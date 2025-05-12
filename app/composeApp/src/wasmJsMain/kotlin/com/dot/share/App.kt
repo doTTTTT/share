@@ -31,7 +31,7 @@ private fun Content() {
 
     Column(
         verticalArrangement = Arrangement.spacedBy(
-            space = 16.dp,
+            space = 32.dp,
             alignment = Alignment.CenterVertically
         ),
         horizontalAlignment = Alignment.CenterHorizontally,
