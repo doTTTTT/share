@@ -12,13 +12,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v4
     - name: Chmod
       run: ls -la
     - name: Build wasmJsBrowserProductionWebpack
       run: ./gradlew wasmJsBrowserProductionWebpack
     - name: Copy move files
       run: move composeApp/build/kotlin-webpack/wasmJs/productionExecutable/* docs/
-    - uses: actions/checkout@v4
     - name: Build the site in the jekyll/builder container
       run: |
         docker run \
