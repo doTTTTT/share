@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Build wasmJsBrowserProductionWebpack
-      run: gradlew wasmJsBrowserProductionWebpack
+      run: ./gradlew wasmJsBrowserProductionWebpack
     - name: Copy move files
       run: move composeApp/build/kotlin-webpack/wasmJs/productionExecutable/* docs/
     - uses: actions/checkout@v4
