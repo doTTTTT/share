@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
@@ -6,6 +5,8 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 kotlin {
@@ -28,9 +29,9 @@ kotlin {
         }
         binaries.executable()
     }
-    
+
     sourceSets {
-        
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -44,10 +45,17 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-alpha17")
+
             implementation("org.jetbrains.compose.material3.adaptive:adaptive:1.1.0")
             implementation("org.jetbrains.compose.material3.adaptive:adaptive-layout:1.1.0")
             implementation("org.jetbrains.compose.material3.adaptive:adaptive-navigation:1.1.0")
 
+            implementation(project.dependencies.platform("io.insert-koin:koin-bom:4.0.3"))
+            implementation("io.insert-koin:koin-core")
+            implementation("io.insert-koin:koin-compose")
+            implementation("io.insert-koin:koin-compose-viewmodel")
+            implementation("io.insert-koin:koin-compose-viewmodel-navigation")
         }
     }
 }

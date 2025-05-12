@@ -1,0 +1,135 @@
+package com.dot.share.screens.welcome
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.AccountBalance
+import androidx.compose.material.icons.outlined.AccountTree
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.window.core.layout.WindowWidthSizeClass
+import org.koin.compose.viewmodel.koinViewModel
+
+@Composable
+internal fun WelcomeScreen(
+    viewModel: WelcomeViewModel = koinViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    Content(
+        uiState = uiState,
+        onAction = viewModel::onAction
+    )
+}
+
+@Composable
+private fun Content(
+    uiState: WelcomeUiState,
+    onAction: (WelcomeAction) -> Unit
+) {
+    val windowSize = currentWindowAdaptiveInfo()
+    val modifier = Modifier
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(
+            space = 32.dp,
+            alignment = Alignment.CenterVertically
+        ),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .padding(16.dp)
+    ) {
+        Spacer(Modifier.weight(1f))
+        Text(
+            text = "Vous êtes une entreprise qui ?",
+            style = MaterialTheme.typography.headlineLarge,
+            textAlign = TextAlign.Center
+        )
+        when (windowSize.windowSizeClass.windowWidthSizeClass) {
+            WindowWidthSizeClass.COMPACT -> Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = modifier
+                    .width(IntrinsicSize.Max),
+                content = { Cards() }
+            )
+
+            else -> Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = modifier
+                    .height(IntrinsicSize.Max),
+                content = { Cards() }
+            )
+        }
+        Spacer(Modifier.weight(1f))
+        Text(
+            text = "Copyright by GrosMalin.com Inc.",
+            style = MaterialTheme.typography.labelSmall
+        )
+        Spacer(Modifier.height(16.dp))
+    }
+}
+
+
+@Composable
+private fun Cards() {
+    CardItem(
+        icon = Icons.Outlined.AccountTree,
+        title = "A besoin de ressources temporaires",
+        description = "Vous cherchez des ressources temporaires ?"
+    )
+    CardItem(
+        icon = Icons.Outlined.AccountBalance,
+        title = "Des ressources en trop",
+        description = "Vous avez des ressources en trop ?"
+    )
+}
+
+@Composable
+private fun CardItem(
+    icon: ImageVector,
+    title: String,
+    description: String
+) {
+    ElevatedCard(
+        onClick = { }
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+            modifier = Modifier
+                .width(300.dp)
+                .padding(8.dp)
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
+            )
+            Text(
+                text = title,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.labelMedium
+            )
+            Text(
+                text = description,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.labelSmall
+            )
+        }
+    }
+}
