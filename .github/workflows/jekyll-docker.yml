@@ -16,9 +16,9 @@ jobs:
     - name: Chmod
       run: cd app && chmod +x gradlew
     - name: Build wasmJsBrowserProductionWebpack
-      run: ./gradlew wasmJsBrowserProductionWebpack
+      run: cd app && ./gradlew wasmJsBrowserProductionWebpack
     - name: Copy move files
-      run: move composeApp/build/kotlin-webpack/wasmJs/productionExecutable/* docs/
+      run: cd app && move composeApp/build/kotlin-webpack/wasmJs/productionExecutable/* ../docs/
     - name: Build the site in the jekyll/builder container
       run: |
         docker run \
