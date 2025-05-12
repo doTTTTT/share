@@ -17,20 +17,10 @@ jobs:
       run: cd app && ./gradlew wasmJsBrowserProductionWebpack
     - name: Move files
       run: cd app && mv composeApp/build/kotlin-webpack/wasmJs/productionExecutable/* ../docs/
-    - name: Build the site in the jekyll/builder container
-      run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod -R 777 /srv/jekyll && jekyll build --future"
     - name: Setup Pages
       id: pages
       uses: actions/configure-pages@v5
-    - name: Build with Jekyll
-      uses: actions/jekyll-build-pages@v1
-      with:
-        source: ./
-        destination: ./_site
-    - name: Upload artifact
+    - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v3
   deploy:
     permissions:
