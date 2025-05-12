@@ -14,11 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Chmod
-      run: chmod +x app/gradlew
+      run: cd app && chmod +x app/gradlew
     - name: Build wasmJsBrowserProductionWebpack
-      run: ./app/gradlew wasmJsBrowserProductionWebpack
+      run: ./gradlew wasmJsBrowserProductionWebpack
     - name: Copy move files
-      run: move app/composeApp/build/kotlin-webpack/wasmJs/productionExecutable/* docs/
+      run: move composeApp/build/kotlin-webpack/wasmJs/productionExecutable/* docs/
     - name: Build the site in the jekyll/builder container
       run: |
         docker run \
