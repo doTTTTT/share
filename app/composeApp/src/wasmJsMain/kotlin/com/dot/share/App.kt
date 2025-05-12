@@ -40,6 +40,7 @@ private fun Content() {
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
     ) {
+        Spacer(Modifier.weight(1f))
         Text(
             text = "Vous êtes une entreprise qui ?",
             style = MaterialTheme.typography.headlineLarge
@@ -59,6 +60,12 @@ private fun Content() {
                 content = { Cards() }
             )
         }
+        Spacer(Modifier.weight(1f))
+        Text(
+            text = "Copyright by GrosMalin.com",
+            style = MaterialTheme.typography.labelSmall
+        )
+        Spacer(Modifier.height(16.dp))
     }
 }
 
