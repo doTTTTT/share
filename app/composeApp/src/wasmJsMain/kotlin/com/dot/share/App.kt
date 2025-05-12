@@ -39,6 +39,7 @@ private fun Content() {
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
+            .padding(16.dp)
     ) {
         Spacer(Modifier.weight(1f))
         Text(
@@ -47,6 +48,8 @@ private fun Content() {
         )
         when (windowSize.windowSizeClass.windowWidthSizeClass) {
             WindowWidthSizeClass.COMPACT -> Column(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = modifier
                     .width(IntrinsicSize.Max),
                 content = { Cards() }
