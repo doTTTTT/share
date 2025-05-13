@@ -26,6 +26,7 @@ import org.koin.compose.KoinApplication
 
 @Composable
 fun App() {
+    // Seems like back gesture doesn't work on web yet
     val dispatcher = remember {
         object : BackGestureDispatcher() {}
     }
