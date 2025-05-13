@@ -1,24 +1,26 @@
+@file:OptIn(ExperimentalComposeUiApi::class)
+
 package com.dot.share.screens.welcome
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountBalance
-import androidx.compose.material.icons.outlined.AccountTree
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
+import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.adaptive.currentWindowAdaptiveInfo
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.window.core.layout.WindowWidthSizeClass
+import com.dot.share.screens.welcome.content.SearchingResource
+import com.dot.share.screens.welcome.content.Selection
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -38,98 +40,68 @@ private fun Content(
     uiState: WelcomeUiState,
     onAction: (WelcomeAction) -> Unit
 ) {
-    val windowSize = currentWindowAdaptiveInfo()
-    val modifier = Modifier
-
     Column(
-        verticalArrangement = Arrangement.spacedBy(
-            space = 32.dp,
-            alignment = Alignment.CenterVertically
-        ),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(16.dp)
     ) {
+        LoginButton(onAction = onAction)
         Spacer(Modifier.weight(1f))
-        Text(
-            text = "Vous êtes une entreprise qui ?",
-            style = MaterialTheme.typography.headlineLarge,
-            textAlign = TextAlign.Center
-        )
-        when (windowSize.windowSizeClass.windowWidthSizeClass) {
-            WindowWidthSizeClass.COMPACT -> Column(
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = modifier
-                    .width(IntrinsicSize.Max),
-                content = { Cards() }
-            )
-
-            else -> Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = modifier
-                    .height(IntrinsicSize.Max),
-                content = { Cards() }
-            )
+        AnimatedVisibility(
+            visible = uiState.content.size > 1
+        ) {
+            IconButton(
+                onClick = { onAction(WelcomeAction.Back) },
+                modifier = Modifier.align(Alignment.Start)
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
+                    contentDescription = null
+                )
+            }
         }
+        WelcomeContent(uiState = uiState, onAction = onAction)
         Spacer(Modifier.weight(1f))
         Text(
-            text = "Copyright by GrosMalin.com Inc.",
+            text = "Copyright by GrosMalin Inc.",
             style = MaterialTheme.typography.labelSmall
         )
-        Spacer(Modifier.height(16.dp))
     }
 }
 
-
 @Composable
-private fun Cards() {
-    CardItem(
-        icon = Icons.Outlined.AccountTree,
-        title = "A besoin de ressources temporaires",
-        description = "Vous cherchez des ressources temporaires ?"
-    )
-    CardItem(
-        icon = Icons.Outlined.AccountBalance,
-        title = "Des ressources en trop",
-        description = "Vous avez des ressources en trop ?"
-    )
+private fun WelcomeContent(
+    uiState: WelcomeUiState,
+    onAction: (WelcomeAction) -> Unit
+) {
+    AnimatedContent(
+        targetState = uiState.content.last(),
+        contentAlignment = Alignment.Center,
+        transitionSpec = {
+            (fadeIn() + slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start))
+                .togetherWith(fadeOut() + slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Start))
+        }
+    ) { target ->
+        when (target) {
+            WelcomeContent.Selection -> Selection(onAction = onAction)
+            WelcomeContent.AvailableResource -> SearchingResource()
+            WelcomeContent.SearchingResource -> Unit
+        }
+    }
 }
 
 @Composable
-private fun CardItem(
-    icon: ImageVector,
-    title: String,
-    description: String
+private fun ColumnScope.LoginButton(
+    onAction: (WelcomeAction) -> Unit
 ) {
-    ElevatedCard(
-        onClick = { }
+    OutlinedButton(
+        onClick = { onAction(WelcomeAction.Login) },
+        modifier = Modifier.align(Alignment.End)
     ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier
-                .width(300.dp)
-                .padding(8.dp)
-        ) {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
-            Text(
-                text = title,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelMedium
-            )
-            Text(
-                text = description,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.labelSmall
-            )
-        }
+        Text(
+            text = "Login"
+        )
     }
 }

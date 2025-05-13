@@ -45,7 +45,11 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
 
-            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-alpha17")
+            implementation("org.jetbrains.androidx.navigation:navigation-compose:2.9.0-beta01")
+
+            implementation("org.jetbrains.compose.material:material-navigation:1.8.0-beta04")
+
+            implementation("org.jetbrains.compose.ui:ui-backhandler:1.8.0")
 
             implementation("org.jetbrains.compose.material3.adaptive:adaptive:1.1.0")
             implementation("org.jetbrains.compose.material3.adaptive:adaptive-layout:1.1.0")
