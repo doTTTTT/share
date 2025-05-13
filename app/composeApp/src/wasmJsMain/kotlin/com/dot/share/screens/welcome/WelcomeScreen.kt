@@ -19,15 +19,24 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.dot.share.common.ui.LaunchedEffectFlowWithLifecycle
+import com.dot.share.routes.Routes
 import com.dot.share.screens.welcome.content.SearchingResource
 import com.dot.share.screens.welcome.content.Selection
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 internal fun WelcomeScreen(
+    onNavigate: (Routes) -> Unit,
     viewModel: WelcomeViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffectFlowWithLifecycle(viewModel.event) { event ->
+        when (event) {
+            is WelcomeEvent.Navigate -> onNavigate(event.route)
+        }
+    }
 
     Content(
         uiState = uiState,

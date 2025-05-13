@@ -2,9 +2,12 @@ package com.dot.share.routes
 
 import kotlinx.serialization.Serializable
 
-data object Routes {
+sealed interface Routes {
 
     @Serializable
-    data object Welcome
+    data object Welcome : Routes
+
+    @Serializable
+    data object Login : Routes
 
 }

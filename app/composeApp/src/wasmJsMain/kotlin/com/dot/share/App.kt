@@ -2,7 +2,6 @@
 
 package com.dot.share
 
-import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -13,7 +12,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackGestureDispatcher
 import androidx.compose.ui.backhandler.LocalBackGestureDispatcher
-import androidx.compose.ui.layout.LookaheadScope
 import androidx.navigation.ExperimentalBrowserHistoryApi
 import androidx.navigation.bindToNavigation
 import androidx.navigation.compose.NavHost
@@ -21,6 +19,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dot.share.di.viewModelModule
 import com.dot.share.routes.Routes
+import com.dot.share.screens.login.LoginScreen
 import com.dot.share.screens.welcome.WelcomeScreen
 import kotlinx.browser.window
 import org.koin.compose.KoinApplication
@@ -61,6 +60,7 @@ private fun Content() {
         startDestination = Routes.Welcome,
         modifier = Modifier.fillMaxSize()
     ) {
-        composable<Routes.Welcome> { WelcomeScreen() }
+        composable<Routes.Welcome> { WelcomeScreen(onNavigate = { navController.navigate(it) }) }
+        composable<Routes.Login> { LoginScreen() }
     }
 }

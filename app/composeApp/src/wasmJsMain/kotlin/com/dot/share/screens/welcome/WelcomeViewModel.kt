@@ -1,6 +1,7 @@
 package com.dot.share.screens.welcome
 
 import com.dot.share.common.ui.BaseViewModel
+import com.dot.share.routes.Routes
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,7 +25,7 @@ internal class WelcomeViewModel : BaseViewModel<WelcomeEvent>() {
     }
 
     private fun onLogin() {
-        // TODO Login page
+        sendEvents(WelcomeEvent.Navigate(Routes.Login))
     }
 
     private fun onSearchingResource() {
