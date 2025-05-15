@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.OutlinedButton
+import androidx.compose.material.TextButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.MaterialTheme
@@ -73,10 +74,14 @@ private fun Content(
         }
         WelcomeContent(uiState = uiState, onAction = onAction)
         Spacer(Modifier.weight(1f))
-        Text(
-            text = "Copyright by GrosMalin Inc.",
-            style = MaterialTheme.typography.labelSmall
-        )
+        TextButton(
+            onClick = { onAction(WelcomeAction.Credit) }
+        ) {
+            Text(
+                text = "Copyright by GrosMalin Inc.",
+                style = MaterialTheme.typography.labelSmall
+            )
+        }
     }
 }
 

@@ -10,4 +10,6 @@ sealed interface WelcomeAction {
 
     data object Back : WelcomeAction
 
+    data object Credit : WelcomeAction
+
 }

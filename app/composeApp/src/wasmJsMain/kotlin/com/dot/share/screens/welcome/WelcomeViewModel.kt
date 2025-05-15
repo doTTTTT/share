@@ -17,6 +17,7 @@ internal class WelcomeViewModel : BaseViewModel<WelcomeEvent>() {
             WelcomeAction.Login -> onLogin()
             WelcomeAction.SearchingResource -> onSearchingResource()
             WelcomeAction.Back -> onBack()
+            WelcomeAction.Credit -> onCredit()
         }
     }
 
@@ -30,6 +31,10 @@ internal class WelcomeViewModel : BaseViewModel<WelcomeEvent>() {
 
     private fun onSearchingResource() {
         _uiState.update { it.copy(content = it.content + WelcomeContent.SearchingResource) }
+    }
+
+    private fun onCredit() {
+        sendEvents(WelcomeEvent.Navigate(Routes.Credit))
     }
 
     private fun onBack() {

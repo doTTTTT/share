@@ -64,4 +64,8 @@ kotlin {
     }
 }
 
-
+compose.resources {
+    publicResClass = true
+    packageOfResClass = "com.share.resources"
+    generateResClass = auto
+}
