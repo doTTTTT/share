@@ -20,6 +20,8 @@ jobs:
     - uses: actions/checkout@v4
     - name: Chmod
       run: cd app && chmod +x gradlew
+    - name: Remove previous
+      run: rm -r ./docs/*
     - name: Build wasmJsBrowserDistribution
       run: cd app && ./gradlew wasmJsBrowserDistribution
     - name: Move files
